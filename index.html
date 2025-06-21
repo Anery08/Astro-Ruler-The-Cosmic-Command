@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astro-Ruler: The Cosmic Command</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <div class="status-bar">
+            <div class="metric-container">
+                <span class="metric-icon">❤️</span>
+                <div class="metric-bar-bg"><div id="morale-bar" class="metric-bar"></div></div>
+            </div>
+            <div class="metric-container">
+                <span class="metric-icon">🛡️</span>
+                <div class="metric-bar-bg"><div id="integrity-bar" class="metric-bar"></div></div>
+            </div>
+            <div class="metric-container">
+                <span class="metric-icon">📦</span>
+                <div class="metric-bar-bg"><div id="resource-bar" class="metric-bar"></div></div>
+            </div>
+            <div class="metric-container">
+                <span class="metric-icon">⭐</span>
+                <div class="metric-bar-bg"><div id="reputation-bar" class="metric-bar"></div></div>
+            </div>
+        </div>
+
+        <div id="game-area" class="game-area">
+            <div id="event-card" class="event-card">
+                <div class="card-content">
+                    <p id="event-text" class="event-text"></p>
+                </div>
+                <div class="choices">
+                    <button id="choice-left" class="choice-button left-choice"></button>
+                    <button id="choice-right" class="choice-button right-choice"></button>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-over-screen" class="game-over-screen">
+            <h2 id="game-over-title">Game Over!</h2>
+            <p id="game-over-message"></p>
+            <button id="restart-button" class="restart-button">Restart Mission</button>
+        </div>
+    </div>
+
+    <audio id="background-music" loop></audio>
+    <audio id="sfx-click"></audio>
+    <audio id="sfx-alert"></audio>
+    <script src="script.js"></script>
+</body>
+</html>
