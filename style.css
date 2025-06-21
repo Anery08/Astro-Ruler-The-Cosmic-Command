@@ -1,42 +1,78 @@
 :root {
-    --primary-bg: #1a1a2e;
-    --secondary-bg: #0f3460;
-    --card-bg: #16213e;
-    --text-color: #e0e0e0;
-    --highlight-color: #e94560;
-    --border-color: #0f3460;
+    /* Base Colors - Dark, rich sci-fi tones */
+    --color-dark-blue: #0A1931;
+    --color-medium-blue: #182847;
+    --color-light-blue: #3A4C6F;
+    --color-accent-teal: #00bcd4; /* Brighter, glowing accent */
+    --color-accent-purple: #8e24aa; /* Secondary accent */
+    --color-text-primary: #E0F2F7; /* Light text for readability */
+    --color-text-secondary: #B0BEC5; /* Slightly muted text */
 
-    --morale-color: #4CAF50; /* Green */
-    --integrity-color: #2196F3; /* Blue */
-    --resource-color: #FFC107; /* Amber */
-    --reputation-color: #9C27B0; /* Purple */
+    /* Metric Colors - Keep these distinct */
+    --color-morale: #4CAF50; /* Green */
+    --color-integrity: #2196F3; /* Blue */
+    --color-resources: #FFC107; /* Amber */
+    --color-reputation: #9C27B0; /* Purple */
+
+    /* Gradients for depth */
+    --gradient-card-top: linear-gradient(to bottom, var(--color-medium-blue), var(--color-dark-blue));
+    --gradient-card-bottom: linear-gradient(to top, var(--color-medium-blue), var(--color-dark-blue));
+    --gradient-button: linear-gradient(to right, var(--color-accent-teal), #00838f);
+    --gradient-button-hover: linear-gradient(to right, #00BCD4, #00acc1);
+    --gradient-restart-button: linear-gradient(to right, var(--color-morale), #388e3c);
+    --gradient-restart-button-hover: linear-gradient(to right, #66bb6a, #43a047);
+
+    /* Shadow and Glow Effects */
+    --shadow-deep: 0 10px 30px rgba(0, 0, 0, 0.6);
+    --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.3);
+    --glow-effect: 0 0 10px var(--color-accent-teal), 0 0 20px var(--color-accent-teal), 0 0 30px var(--color-accent-teal);
+    --glow-danger: 0 0 8px rgba(255, 0, 0, 0.7), 0 0 15px rgba(255, 0, 0, 0.5);
 }
 
+/* Global Styles */
 body {
     margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: var(--primary-bg);
-    color: var(--text-color);
+    font-family: 'Rajdhani', sans-serif; /* Primary UI font, clear and modern */
+    background-color: var(--color-dark-blue);
+    color: var(--color-text-primary);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    overflow: hidden;
+    overflow: hidden; /* Prevent scrollbars */
+    position: relative;
+    user-select: none; /* Make text not selectable by default */
+}
+
+/* Background Atmosphere */
+.body-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('assets/images/ship_background.jpg') no-repeat center center fixed; /* Placeholder image */
+    background-size: cover;
+    opacity: 0.2; /* Subtly visible */
+    filter: blur(3px) brightness(0.6); /* Atmospheric blur and darken */
+    z-index: 1;
 }
 
 .game-container {
+    position: relative; /* Positioned above the background */
+    z-index: 5;
     width: 90%;
     max-width: 800px;
     height: 90vh;
     max-height: 900px;
-    background-color: var(--secondary-bg);
-    border-radius: 15px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(135deg, var(--color-medium-blue) 0%, var(--color-dark-blue) 100%);
+    border-radius: 20px;
+    box-shadow: var(--shadow-deep);
+    border: 2px solid var(--color-light-blue);
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 25px;
     box-sizing: border-box;
-    position: relative;
     overflow: hidden;
 }
 
@@ -45,8 +81,8 @@ body {
     display: flex;
     justify-content: space-around;
     padding-bottom: 20px;
-    border-bottom: 2px solid var(--border-color);
-    margin-bottom: 20px;
+    border-bottom: 1px solid var(--color-light-blue);
+    margin-bottom: 25px;
     position: relative;
     z-index: 10;
 }
@@ -59,31 +95,60 @@ body {
 }
 
 .metric-icon {
-    font-size: 2.2em;
-    margin-bottom: 5px;
-    transition: transform 0.2s ease-in-out;
+    font-size: 2.5em; /* Larger icons */
+    margin-bottom: 8px;
+    color: var(--color-text-primary); /* Default icon color */
+    transition: transform 0.2s ease-in-out, text-shadow 0.3s ease-in-out;
 }
+
+/* Specific icon colors for better visual distinction */
+.metric-container:nth-child(1) .metric-icon { color: var(--color-morale); }
+.metric-container:nth-child(2) .metric-icon { color: var(--color-integrity); }
+.metric-container:nth-child(3) .metric-icon { color: var(--color-resources); }
+.metric-container:nth-child(4) .metric-icon { color: var(--color-reputation); }
+
 
 .metric-bar-bg {
     width: 100%;
-    height: 15px;
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
+    height: 18px; /* Thicker bars */
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 9px;
     overflow: hidden;
     position: relative;
+    border: 1px solid var(--color-light-blue);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .metric-bar {
     height: 100%;
-    width: 100%; /* Default to full */
-    border-radius: 8px;
+    width: 100%;
+    border-radius: 9px;
     transition: width 0.3s ease-out, background-color 0.3s ease-out;
+    position: relative;
 }
 
-#morale-bar { background-color: var(--morale-color); }
-#integrity-bar { background-color: var(--integrity-color); }
-#resource-bar { background-color: var(--resource-color); }
-#reputation-bar { background-color: var(--reputation-color); }
+/* Gradients for metric bars */
+#morale-bar { background-image: linear-gradient(to right, #2E7D32, var(--color-morale)); }
+#integrity-bar { background-image: linear-gradient(to right, #1565C0, var(--color-integrity)); }
+#resource-bar { background-image: linear-gradient(to right, #FF8F00, var(--color-resources)); }
+#reputation-bar { background-image: linear-gradient(to right, #6A1B9A, var(--color-reputation)); }
+
+/* Add glow for high/low states on icons and bars */
+.pulsing-icon {
+    animation: pulse 0.8s ease-in-out infinite alternate;
+    text-shadow: var(--glow-effect);
+}
+.metric-bar[style*="width: 20%"],
+.metric-bar[style*="width: 10%"],
+.metric-bar[style*="width: 0%"] { /* Low metric glow */
+    box-shadow: inset 0 0 8px rgba(255, 0, 0, 0.7), 0 0 15px rgba(255, 0, 0, 0.5);
+}
+.metric-bar[style*="width: 80%"],
+.metric-bar[style*="width: 90%"],
+.metric-bar[style*="width: 100%"] { /* High metric glow */
+     box-shadow: inset 0 0 8px rgba(0, 255, 0, 0.7), 0 0 15px rgba(0, 255, 0, 0.5);
+}
+
 
 /* Game Area and Event Card */
 .game-area {
@@ -91,23 +156,43 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    perspective: 1000px; /* For 3D transformations */
+    perspective: 1000px;
+    position: relative;
+    overflow: hidden;
 }
 
 .event-card {
-    background-color: var(--card-bg);
-    border-radius: 15px;
+    background: var(--gradient-card-top);
+    border-radius: 18px;
     padding: 30px;
     width: 95%;
-    max-width: 550px;
-    min-height: 350px;
+    max-width: 580px; /* Slightly wider */
+    min-height: 380px; /* Taller */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+    box-shadow: var(--shadow-deep);
+    border: 1px solid var(--color-accent-teal);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease-out; /* Smoother transition */
     position: relative;
     box-sizing: border-box;
+    overflow: hidden; /* Important for border-radius on pseudoelements */
+}
+
+/* Add a subtle holographic border effect */
+.event-card::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    background: linear-gradient(45deg, var(--color-accent-teal), var(--color-accent-purple), var(--color-accent-teal));
+    z-index: -1;
+    border-radius: 20px;
+    filter: blur(5px);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+.event-card:hover::before {
+    opacity: 1;
 }
 
 .card-content {
@@ -116,45 +201,69 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
+    padding: 10px; /* Inner padding */
 }
 
 .event-text {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.3em;
-    line-height: 1.6;
+    font-family: 'Share Tech Mono', monospace; /* Monospaced for a data-screen feel */
+    font-size: 1.4em; /* Larger and easier to read */
+    line-height: 1.7;
     margin: 0;
+    color: var(--color-text-primary);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7); /* Subtle text shadow for depth */
 }
 
 .choices {
     display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-    gap: 15px;
+    flex-direction: column; /* Stack buttons for better readability on card */
+    gap: 15px; /* Space between buttons */
+    margin-top: 25px;
 }
 
 .choice-button {
-    flex: 1;
-    padding: 15px 20px;
+    padding: 18px 25px; /* More padding for easier clicks */
     border: none;
-    border-radius: 10px;
-    background-color: var(--highlight-color);
-    color: var(--text-color);
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1em;
+    border-radius: 12px; /* Slightly more rounded */
+    background: var(--gradient-button);
+    color: var(--color-text-primary);
+    font-family: 'Orbitron', sans-serif; /* Bold sci-fi font for choices */
+    font-size: 1.1em;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    box-shadow: var(--shadow-light);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Text shadow for buttons too */
+    position: relative;
+    overflow: hidden;
 }
 
 .choice-button:hover {
-    background-color: #c73752;
-    transform: translateY(-2px);
+    background: var(--gradient-button-hover);
+    transform: translateY(-3px); /* More pronounced lift */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), var(--glow-effect); /* Add glow on hover */
 }
 
 .choice-button:active {
     transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
+
+/* Add subtle scanline effect to buttons */
+.choice-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    transform: skewX(-20deg);
+    transition: left 0.4s ease;
+}
+
+.choice-button:hover::after {
+    left: 100%;
+}
+
 
 /* Game Over Screen */
 .game-over-screen {
@@ -163,20 +272,21 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.95);
-    color: var(--text-color);
+    background-color: rgba(0, 0, 0, 0.98); /* Near black, slight transparency */
+    color: var(--color-text-primary);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    border-radius: 15px;
+    border-radius: 20px;
     z-index: 100;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-    padding: 20px;
+    transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+    padding: 30px;
     box-sizing: border-box;
+    backdrop-filter: blur(5px); /* Soft blur behind the screen */
 }
 
 .game-over-screen.active {
@@ -186,61 +296,76 @@ body {
 
 .game-over-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: 3em;
-    color: var(--highlight-color);
-    margin-bottom: 20px;
+    font-size: 3.5em; /* Larger, more impactful */
+    color: var(--color-accent-teal); /* Use accent color for impact */
+    margin-bottom: 25px;
+    text-shadow: 0 0 15px var(--color-accent-teal), 0 0 25px var(--color-accent-purple); /* Intense glow */
+    animation: text-flicker 1.5s infinite alternate;
 }
 
 .game-over-message {
-    font-size: 1.2em;
-    line-height: 1.6;
-    margin-bottom: 30px;
-    max-width: 600px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.3em; /* Easier to read */
+    line-height: 1.8;
+    margin-bottom: 40px;
+    max-width: 650px;
+    color: var(--color-text-secondary);
 }
 
 .restart-button {
-    padding: 15px 30px;
+    padding: 18px 35px;
     border: none;
-    border-radius: 10px;
-    background-color: var(--morale-color);
-    color: var(--primary-bg);
+    border-radius: 12px;
+    background: var(--gradient-restart-button);
+    color: var(--color-dark-blue); /* Text color contrasting with button */
     font-family: 'Orbitron', sans-serif;
-    font-size: 1.2em;
+    font-size: 1.3em;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    box-shadow: var(--shadow-light);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .restart-button:hover {
-    background-color: #388e3c;
-    transform: translateY(-2px);
+    background: var(--gradient-restart-button-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), var(--glow-effect);
 }
 
-/* Card Animation Classes (for JS) */
+/* Card Animation Classes (for JS) - Keep these the same, they're good! */
 .card-exit-left {
-    transform: translateX(-150%) rotateY(-30deg);
+    transform: translateX(-150%) rotateY(-30deg) scale(0.8); /* Scale down slightly */
     opacity: 0;
 }
 
 .card-exit-right {
-    transform: translateX(150%) rotateY(30deg);
+    transform: translateX(150%) rotateY(30deg) scale(0.8); /* Scale down slightly */
     opacity: 0;
 }
 
 .card-enter {
-    transform: translateX(0) rotateY(0);
+    transform: translateX(0) rotateY(0) scale(1);
     opacity: 1;
 }
 
+/* Keyframe Animations */
 @keyframes pulse {
     0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+    50% { transform: scale(1.1); text-shadow: var(--glow-effect); } /* More pronounced pulse and glow */
     100% { transform: scale(1); }
 }
 
-.pulsing-icon {
-    animation: pulse 0.8s ease-in-out infinite;
+@keyframes text-flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        text-shadow: var(--glow-effect);
+        opacity: 1;
+    }
+    20%, 24%, 55% {
+        text-shadow: none;
+        opacity: 0.8;
+    }
 }
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -253,9 +378,42 @@ body {
         margin-bottom: 15px;
     }
     .metric-container {
-        width: 48%; /* Two columns on smaller screens */
+        width: 48%;
         margin-bottom: 10px;
     }
+    .metric-icon {
+        font-size: 2em;
+    }
+    .metric-bar-bg {
+        height: 15px;
+    }
+    .event-card {
+        padding: 20px;
+        min-height: 300px;
+    }
+    .event-text {
+        font-size: 1.2em;
+    }
+    .choices {
+        gap: 10px;
+    }
+    .choice-button {
+        font-size: 1em;
+        padding: 15px 20px;
+    }
+    .game-over-title {
+        font-size: 2.8em;
+    }
+    .game-over-message {
+        font-size: 1.1em;
+    }
+    .restart-button {
+        font-size: 1.1em;
+        padding: 15px 25px;
+    }
+}
+
+@media (max-width: 480px) {
     .metric-icon {
         font-size: 1.8em;
     }
@@ -263,28 +421,24 @@ body {
         height: 12px;
     }
     .event-card {
-        padding: 20px;
-        min-height: 300px;
+        padding: 15px;
+        min-height: 250px;
     }
     .event-text {
-        font-size: 1.1em;
-    }
-    .choices {
-        flex-direction: column;
-        gap: 10px;
+        font-size: 1em;
     }
     .choice-button {
         font-size: 0.9em;
         padding: 12px 15px;
     }
     .game-over-title {
-        font-size: 2.5em;
+        font-size: 2em;
     }
     .game-over-message {
-        font-size: 1em;
+        font-size: 0.9em;
     }
     .restart-button {
         font-size: 1em;
-        padding: 12px 25px;
+        padding: 12px 20px;
     }
 }
