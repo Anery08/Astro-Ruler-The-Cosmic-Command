@@ -366,79 +366,118 @@ body {
     }
 }
 
+/* --- Start Screen Styles --- */
+.start-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.98); /* Almost opaque black */
+    color: var(--color-text-primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 20px; /* Matches game container border-radius */
+    z-index: 101; /* Higher than game over screen */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+    padding: 30px;
+    box-sizing: border-box;
+    backdrop-filter: blur(5px);
+}
 
-/* Responsive adjustments */
+.start-screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.start-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4.5em; /* Large and bold */
+    color: var(--color-accent-teal);
+    margin-bottom: 5px;
+    text-shadow: var(--glow-effect);
+    animation: text-flicker 1.5s infinite alternate; /* Re-using flicker animation */
+}
+
+.start-subtitle {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.2em;
+    color: var(--color-text-primary);
+    margin-bottom: 30px;
+    text-shadow: 0 0 8px rgba(0,0,0,0.5);
+}
+
+.start-description {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.2em;
+    line-height: 1.7;
+    max-width: 600px;
+    margin-bottom: 40px;
+    color: var(--color-text-secondary);
+}
+
+.start-button {
+    padding: 20px 40px;
+    border: none;
+    border-radius: 15px; /* Slightly larger */
+    background: var(--gradient-button); /* Re-using button gradient */
+    color: var(--color-text-primary);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5em; /* Prominent */
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    box-shadow: var(--shadow-light);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+    animation: pulse 1.5s infinite alternate; /* Gentle pulse to attract attention */
+}
+
+.start-button:hover {
+    background: var(--gradient-button-hover);
+    transform: translateY(-5px); /* More lift for impact */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), var(--glow-effect);
+}
+
+.start-button:active {
+    transform: translateY(0);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments for start screen */
 @media (max-width: 768px) {
-    .game-container {
-        padding: 15px;
+    .start-title {
+        font-size: 3.5em;
     }
-    .status-bar {
-        flex-wrap: wrap;
-        padding-bottom: 15px;
-        margin-bottom: 15px;
+    .start-subtitle {
+        font-size: 1.8em;
     }
-    .metric-container {
-        width: 48%;
-        margin-bottom: 10px;
-    }
-    .metric-icon {
-        font-size: 2em;
-    }
-    .metric-bar-bg {
-        height: 15px;
-    }
-    .event-card {
-        padding: 20px;
-        min-height: 300px;
-    }
-    .event-text {
-        font-size: 1.2em;
-    }
-    .choices {
-        gap: 10px;
-    }
-    .choice-button {
+    .start-description {
         font-size: 1em;
-        padding: 15px 20px;
     }
-    .game-over-title {
-        font-size: 2.8em;
-    }
-    .game-over-message {
-        font-size: 1.1em;
-    }
-    .restart-button {
-        font-size: 1.1em;
-        padding: 15px 25px;
+    .start-button {
+        font-size: 1.2em;
+        padding: 15px 30px;
     }
 }
 
 @media (max-width: 480px) {
-    .metric-icon {
-        font-size: 1.8em;
+    .start-title {
+        font-size: 2.5em;
     }
-    .metric-bar-bg {
-        height: 12px;
+    .start-subtitle {
+        font-size: 1.3em;
     }
-    .event-card {
-        padding: 15px;
-        min-height: 250px;
-    }
-    .event-text {
-        font-size: 1em;
-    }
-    .choice-button {
-        font-size: 0.9em;
-        padding: 12px 15px;
-    }
-    .game-over-title {
-        font-size: 2em;
-    }
-    .game-over-message {
+    .start-description {
         font-size: 0.9em;
     }
-    .restart-button {
+    .start-button {
         font-size: 1em;
-        padding: 12px 20px;
+        padding: 12px 25px;
     }
 }
